@@ -1,0 +1,16 @@
+server:
+  port: 8088
+
+db:
+  - { name: "user", dialect: "sqlite3", dsn: "./data/user.db?cache=shared" }
+  - { name: "post", dialect: "sqlite3", dsn: "./data/post.db?cache=shared" }
+
+mail:
+  addr: smtp.163.com:25
+  user: lweny_c@163.com
+  password: lw666666
+
+admin:
+  email: admin@163.com
+  password: admin
+  nick_name: amdin

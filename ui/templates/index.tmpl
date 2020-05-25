@@ -1,0 +1,111 @@
+{{ define "index.tmpl" }}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="generator" content="">
+    <title>lchat</title>
+    <link rel="icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+  </head>
+  <body class="l-body">
+    <header>
+      <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark shadow-sm">
+        <div class="container">
+          <a href="/" class="navbar-brand"><strong>Lchat</strong></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-item nav-link active ml-3" href="/">首页</a>
+              <a class="nav-item nav-link ml-3" href="/post/edit">写文章</a>
+            </div>
+            <div class="navbar-nav ml-auto">
+              {{ if .isLogin }}
+              <div class="nav-item nav-link dropdown">
+                <button class="btn btn-sm dropdown-toggle btn-outline-light" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ .nickName }}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="/user/posts">文库</a>
+                  <a class="dropdown-item" href="#">个人中心</a>
+                  <a class="dropdown-item" href="/logout">登出</a>
+                </div>
+              </div>
+              {{ else }}
+              <a class="nav-item nav-link" href="/login">
+                <button type="button" class="btn btn-sm btn-outline-light">登录</button>
+              </a>
+              <a class="nav-item nav-link" href="/register">
+                <button type="button" class="btn btn-sm btn-outline-secondary">注册</button>
+              </a>
+              {{ end }}
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main role="main" class="container l-main">
+      <div class="row mt-4">
+        <div class="col-sm-8">
+          {{ range .posts }}
+          <div class="card mb-3" style="height:200px">
+            <div class="card-body">
+              <h3 class="card-title pb-2 border-bottom"><a href="/post?postId={{ .ID }}">{{ .Title }}</a></h3>
+              <p class="card-text">{{ timeFormat .UpdatedAt "2006/01/02 15:04" }} - {{ .Summary }}</p>
+              {{ range .Tags }}
+                <span class="badge badge-warning">{{ .Name }}</span>
+              {{ end }}
+            </div>
+          </div>
+          {{ end }}
+
+          <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end">
+              <li class="page-item {{ if le .pageIndex 1 }}disabled{{ end }}">
+                <a class="page-link" href="/?pageIndex={{ minus .pageIndex 1 }}">上一页</a>
+              </li>
+              <li class="page-item {{ if ge .pageIndex .totalPage }}disabled{{ end }}">
+                <a class="page-link" href="/?pageIndex={{ add .pageIndex 1 }}">下一页</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-header">所有标签</div>
+            <div class="card-body">
+              <button type="button" class="btn btn-sm btn-secondary mb-2 mr-2">
+                默认标签 <span class="badge badge-light">{{ .countTags }}</span>
+              </button>
+              {{ range .tags }}
+              <button type="button" class="btn btn-sm btn-info mb-2 mr-2">
+                {{ .Name }} <span class="badge badge-light">{{ .Total }}</span>
+              </button>
+              {{ end }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <p>Lchat 是一个用 Go 语言打造的网站，欢迎大家一起学习探讨</p>
+      <p><a href="javascript:void(0);" onclick="window.scrollTo( 0, 0 );">返回顶部</a></p>
+    </footer>
+
+
+    <script src="/js/jquery-3.5.1.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
+
+{{ end }}

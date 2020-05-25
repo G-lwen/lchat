@@ -1,0 +1,233 @@
+{{ define "post_edit.tmpl" }}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="generator" content="">
+    <title>lchat</title>
+    <link rel="icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/simplemde.min.css">
+    <link rel="stylesheet" href="/css/atelier-forest-dark.min.css">
+    <style>
+      .CodeMirror, .CodeMirror-scroll {
+        min-height: 580px;
+      }
+    </style>
+  </head>
+  <body class="l-body">
+    <header>
+      <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark shadow-sm">
+        <div class="container">
+          <a href="/" class="navbar-brand"><strong>Lchat</strong></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-item nav-link ml-3" href="/">首页</a>
+              <a class="nav-item nav-link ml-3 active" href="/post/edit">写文章</a>
+            </div>
+            <div class="navbar-nav ml-auto">
+              <div class="nav-item nav-link dropdown">
+                <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ .nickName }}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="/user/posts">文库</a>
+                  <a class="dropdown-item" href="#">个人中心</a>
+                  <a class="dropdown-item" href="/logout">登出</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main role="main" class="container l-main" style="padding-bottom:55px;">
+      <div class="row mt-5">
+        <div class="col-3">
+          <div class="card">
+            <div class="card-header">文章信息</div>
+            <div class="card-body">
+              {{ if .hasPost }}
+              <p class="card-text">ID: {{ .post.ID }}</p>
+              <p class="card-text">作者: {{ .nickName }}</p>
+              <p class="card-text">状态: {{ if .post.Published }}已发布{{ else }}未发布{{ end }}</p>
+              <p class="card-text">创建时间: {{ timeFormat .post.CreatedAt "2006/01/02 15:04" }}</p>
+              <p class="card-text">修改时间: {{ timeFormat .post.UpdatedAt "2006/01/02 15:04" }}</p>
+              {{ else }}
+              <p class="card-text">欢迎来到 lchat 系统, 请开始编写你的文章。</p>
+              {{ end }}
+            </div>
+          </div>
+          {{ if .hasPost }}
+          <div class="card mt-5">
+            <div class="card-header">文章标签</div>
+            <div class="card-body">
+              <span class="badge badge-pill badge-secondary">默认标签</span>
+              {{ range .post.Tags }}
+              <span class="badge badge-pill badge-info">{{ .Name }}</span>
+              {{ end }}
+            </div>
+          </div>
+          {{ end }}
+        </div>
+        <div class="col-9">
+          <input type="hidden" id="postId" value="{{ .post.ID }}">
+          <input type="text" value="{{ .post.Title }}" class="form-control mb-4" id="postTitle" placeholder="请输入文章标题">
+          <textarea class="form-control" id="postBody" rows="27"></textarea>
+        </div>
+      </div>
+
+    </main>
+
+    <footer>
+      <nav class="navbar fixed-bottom navbar-light bg-light border-top bg-white">
+        <div class="container">
+          <a class="btn btn-primary ml-auto" id="publishPost" href="javascript:void(0)">发布</a>
+          <a class="ml-3 btn btn-danger {{ if not .hasPost }}disabled{{ end }}" href="/post?postId={{ .post.ID }}" target="_Blank">预览</a>
+          <a class="ml-3 btn btn-success disabled" href="javascript:void(0);">草稿</a>
+          <a class="ml-3 btn btn-info {{ if .hasPost }}{{else}}disabled{{end}}" href="javascript:void(0);" data-toggle="modal" data-target="#tagsModal">标签</a>
+        </div>
+      </nav>
+    </footer>
+
+    <div class="modal fade" id="tagsModal" tabindex="-1" role="dialog" aria-labelledby="tagsModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="tagsModalLabel">文章标签设置</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="input-group">
+              <input id="tagName" type="text" class="form-control" placeholder="请输入标签名" aria-label="Recipient's username with two button addons" aria-describedby="button-addon4">
+              <div class="input-group-append" id="button-addon4">
+                <button class="btn btn-outline-primary" id="addTag" type="button">添加</button>
+                <button class="btn btn-outline-danger" id="removeTag" type="button">删除</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-3.5.1.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/simplemde.min.js"></script>
+    <script src="/js/highlight.min.js"></script>
+    <script>
+      $(function() {
+        var simplemde = new SimpleMDE({
+            autosave: {
+                enabled: true,
+                uniqueId: "MyUniqueID",
+                delay: 1000
+            },
+            status: ["autosave", "lines", "words"],
+            spellChecker: false,
+            element: document.getElementById("postBody"),
+            promptURLs: true,
+            renderingConfig: {
+              singleLineBreaks: false,
+              codeSyntaxHighlighting: true,
+            },
+            toolbar: [
+                "bold", "italic", "strikethrough", "heading", "code", "quote", "unordered-list",
+                "ordered-list", "clean-block", "link", "image", "table", "horizontal-rule", "preview", "side-by-side", "fullscreen", "guide",
+                {
+                    name: "uploadImage",//自定义按钮
+                    action: function customFunction(editor) {
+                        console.log(editor);
+                    },
+                    className: "fa fa-star",
+                    title: "Upload Image"
+                }
+            ]
+        });
+
+        simplemde.value({{ .post.Body }});
+
+        $('#publishPost').click(function() {
+          var postId = $('#postId').val()
+          var title = $('#postTitle').val()
+          var body = simplemde.value();
+          var htmlBody = simplemde.markdown(body);
+          $.ajax({
+            url: '/post/publish',
+            type: 'POST',
+            data: { postId: postId, title: title, body: body, htmlBody: htmlBody },
+            success: function(res) {
+              if (res.code == 200) {
+                alert("文章发布成功")
+                window.location.href='/post/edit?postId=' + res.postId
+                return
+              }
+              alert("文章发布失败: " + res.message)
+            },
+            error: function(err) {
+              alert("系统繁忙, 请稍后重试! ");
+            }
+          });
+        });
+
+        $('#addTag').click(function() {
+          var postId = $('#postId').val()
+          var tagName = $('#tagName').val()
+          if (tagName == '') {
+            alert("标签名不能为空")
+            return
+          }
+          $.ajax({
+            url: '/post/addTag',
+            type: 'POST',
+            data: { postId: postId, tagName: tagName },
+            success: function(res) {
+              if (res.code == 200) {
+                window.location.href='/post/edit?postId=' + postId
+                return
+              }
+              alert("标签添加失败: " + res.message)
+            },
+            error: function(err) {
+              alert("系统繁忙, 请稍后重试! ");
+            }
+          });
+        });
+        $('#removeTag').click(function() {
+         var postId = $('#postId').val()
+         var tagName = $('#tagName').val()
+         if (tagName == '') {
+           alert("标签名不能为空")
+           return
+         }
+         $.ajax({
+           url: '/post/removeTag?postId='+postId+'&tagName='+tagName,
+           type: 'DELETE',
+           success: function(res) {
+             if (res.code == 200) {
+               window.location.href='/post/edit?postId=' + postId
+               return
+             }
+             alert("标签删除失败: " + res.message)
+           },
+           error: function(err) {
+             alert("系统繁忙, 请稍后重试! ");
+           }
+         });
+       });
+      })
+    </script>
+  </body>
+</html>
+
+{{ end }}

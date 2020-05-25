@@ -1,0 +1,32 @@
+/*
+ * Body
+ */
+.l-body {
+    padding-top: 4rem;
+    background-color: #f9f9f9;
+}
+
+/*
+ * Main
+ */
+.l-main {
+    min-height: 750px;
+}
+
+/*
+ * Footer
+ */
+.l-footer {
+    padding: 2.5rem 0;
+    color: #999;
+    text-align: center;
+    background-color: #fefefe;
+    border-top: .05rem solid #e5e5e5;
+}
+.l-footer p:last-child {
+    margin-bottom: 0;
+}
+
+/*
+ * Login
+ */

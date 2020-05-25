@@ -1,0 +1,29 @@
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /css/*filepath            --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] HEAD   /css/*filepath            --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] GET    /js/*filepath             --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] HEAD   /js/*filepath             --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] GET    /images/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] HEAD   /images/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] GET    /favicon.ico              --> github.com/gin-gonic/gin.(*RouterGroup).StaticFile.func1 (4 handlers)
+[GIN-debug] HEAD   /favicon.ico              --> github.com/gin-gonic/gin.(*RouterGroup).StaticFile.func1 (4 handlers)
+[GIN-debug] GET    /ping                     --> lchat/service/router.ping (4 handlers)
+[GIN-debug] GET    /                         --> lchat/service/router.indexPage (4 handlers)
+[GIN-debug] GET    /login                    --> lchat/service/router.loginPage (4 handlers)
+[GIN-debug] POST   /login                    --> lchat/service/router.login (4 handlers)
+[GIN-debug] GET    /logout                   --> lchat/service/router.logout (4 handlers)
+[GIN-debug] GET    /register                 --> lchat/service/router.registerPage (4 handlers)
+[GIN-debug] GET    /registerCode             --> lchat/service/router.getRegisterCode (4 handlers)
+[GIN-debug] POST   /register                 --> lchat/service/router.register (4 handlers)
+[GIN-debug] GET    /post                     --> lchat/service/router.postPage (4 handlers)
+[GIN-debug] GET    /post/edit                --> lchat/service/router.postEditPage (5 handlers)
+[GIN-debug] POST   /post/publish             --> lchat/service/router.postPublish (5 handlers)
+[GIN-debug] POST   /post/addTag              --> lchat/service/router.postAddTag (5 handlers)
+[GIN-debug] DELETE /post/removeTag           --> lchat/service/router.postRemoveTag (5 handlers)
+[GIN-debug] GET    /user/posts               --> lchat/service/router.userPostsPage (5 handlers)
+[GIN-debug] Listening and serving HTTP on :8088
