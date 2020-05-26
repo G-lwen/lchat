@@ -6,14 +6,14 @@ db:
   - { name: "post", dialect: "sqlite3", dsn: "./data/db/post.db?cache=shared" }
 
 mail:
-  addr: smtp.163.com:25
-  user: lweny_c@163.com
-  password: lw666666
+  addr: 
+  user: 
+  password: 
 
 oauth:
-  github_client_id: 1a6f7629349cbca9978e
-  github_client_secret: 43824abb60ca2c4b368282a0232992be95395b5b
-  github_redirect_url: https://c37b7d3.cpolar.io/oauth/github/callback
+  github_client_id: 
+  github_client_secret: 
+  github_redirect_url: https://ip/oauth/github/callback
 
 admin:
   email: admin@163.com
