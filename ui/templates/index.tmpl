@@ -23,17 +23,17 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-              <a class="nav-item nav-link active ml-3" href="/">首页</a>
-              <a class="nav-item nav-link ml-3" href="/post/edit">写文章</a>
+              <a class="nav-item nav-link active ml-3 active" href="/">首页</a>
             </div>
             <div class="navbar-nav ml-auto">
               {{ if .isLogin }}
               <div class="nav-item nav-link dropdown">
-                <button class="btn btn-sm dropdown-toggle btn-outline-light" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ .nickName }}
+                <button class="btn p-0 border-0 btn-sm dropdown-toggle btn-outline-light" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="{{ .avatarUrl }}" style="width:20px;height:20px;"></img>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <a class="dropdown-item" href="/user/posts">文库</a>
+                  <a class="dropdown-item" href="/post/edit">写文章</a>
                   <a class="dropdown-item" href="#">个人中心</a>
                   <a class="dropdown-item" href="/logout">登出</a>
                 </div>

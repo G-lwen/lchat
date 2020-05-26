@@ -12,6 +12,7 @@
     <link rel="icon" href="/favicon.ico">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.css">
     <link rel="stylesheet" href="/css/simplemde.min.css">
     <link rel="stylesheet" href="/css/atelier-forest-dark.min.css">
     <style>
@@ -30,16 +31,16 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-              <a class="nav-item nav-link ml-3" href="/">首页</a>
-              <a class="nav-item nav-link ml-3 active" href="/post/edit">写文章</a>
+              <a class="nav-item nav-link ml-3 active" href="/">首页</a>
             </div>
             <div class="navbar-nav ml-auto">
               <div class="nav-item nav-link dropdown">
-                <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ .nickName }}
+                <button class="btn p-0 border-0 btn-sm dropdown-toggle btn-outline-light" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="{{ .avatarUrl }}" style="width:20px;height:20px;"></img>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <a class="dropdown-item" href="/user/posts">文库</a>
+                  <a class="dropdown-item" href="/post/edit">写文章</a>
                   <a class="dropdown-item" href="#">个人中心</a>
                   <a class="dropdown-item" href="/logout">登出</a>
                 </div>
@@ -94,7 +95,8 @@
           <a class="btn btn-primary ml-auto" id="publishPost" href="javascript:void(0)">发布</a>
           <a class="ml-3 btn btn-danger {{ if not .hasPost }}disabled{{ end }}" href="/post?postId={{ .post.ID }}" target="_Blank">预览</a>
           <a class="ml-3 btn btn-success disabled" href="javascript:void(0);">草稿</a>
-          <a class="ml-3 btn btn-info {{ if .hasPost }}{{else}}disabled{{end}}" href="javascript:void(0);" data-toggle="modal" data-target="#tagsModal">标签</a>
+          <a class="ml-3 btn btn-warning {{ if .hasPost }}{{else}}disabled{{end}}" href="javascript:void(0);" data-toggle="modal" data-target="#tagsModal">标签</a>
+          <a class="ml-3 btn btn-info" href="/user/posts">文库</a>
         </div>
       </nav>
     </footer>
@@ -128,11 +130,15 @@
     <script>
       $(function() {
         var simplemde = new SimpleMDE({
+            autoDownloadFontAwesome: false,
             autosave: {
                 enabled: true,
                 uniqueId: "MyUniqueID",
                 delay: 1000
             },
+            forceSync: true,
+            hideIcons: ["guide", "heading"],
+	        showIcons: ["code", "table"],
             status: ["autosave", "lines", "words"],
             spellChecker: false,
             element: document.getElementById("postBody"),
@@ -143,14 +149,21 @@
             },
             toolbar: [
                 "bold", "italic", "strikethrough", "heading", "code", "quote", "unordered-list",
-                "ordered-list", "clean-block", "link", "image", "table", "horizontal-rule", "preview", "side-by-side", "fullscreen", "guide",
+                "ordered-list", "clean-block", "link",
                 {
-                    name: "uploadImage",//自定义按钮
-                    action: function customFunction(editor) {
-                        console.log(editor);
-                    },
-                    className: "fa fa-star",
-                    title: "Upload Image"
+                  name: "image",
+                  action: SimpleMDE.drawImage,
+                  className: "fa fa-image",
+                  title: "Upload Image"
+                },
+                "table", "horizontal-rule", "preview", "side-by-side", "fullscreen", "guide",
+                {
+                  name: "uploadImage",//自定义按钮
+                  action: function customFunction(editor) {
+                    console.log(editor);
+                  },
+                  className: "fa fa-star",
+                  title: "Upload Image"
                 }
             ]
         });
@@ -204,28 +217,29 @@
           });
         });
         $('#removeTag').click(function() {
-         var postId = $('#postId').val()
-         var tagName = $('#tagName').val()
-         if (tagName == '') {
-           alert("标签名不能为空")
-           return
-         }
-         $.ajax({
-           url: '/post/removeTag?postId='+postId+'&tagName='+tagName,
-           type: 'DELETE',
-           success: function(res) {
-             if (res.code == 200) {
-               window.location.href='/post/edit?postId=' + postId
+             var postId = $('#postId').val()
+             var tagName = $('#tagName').val()
+             if (tagName == '') {
+               alert("标签名不能为空")
                return
              }
-             alert("标签删除失败: " + res.message)
-           },
-           error: function(err) {
-             alert("系统繁忙, 请稍后重试! ");
-           }
-         });
-       });
-      })
+             $.ajax({
+               url: '/post/removeTag?postId='+postId+'&tagName='+tagName,
+               type: 'DELETE',
+               success: function(res) {
+                 if (res.code == 200) {
+                   window.location.href='/post/edit?postId=' + postId
+                   return
+                 }
+                 alert("标签删除失败: " + res.message)
+               },
+               error: function(err) {
+                 alert("系统繁忙, 请稍后重试! ");
+               }
+             });
+        });
+
+    })
     </script>
   </body>
 </html>

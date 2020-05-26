@@ -8,13 +8,16 @@ import (
 	"io"
 	"lchat/service/conf"
 	"lchat/service/entity"
+	"lchat/service/middleware"
 	"lchat/service/utils"
 	"net/http"
 	"os"
 	"time"
 )
 
-const sessionKey = "lchat-session-key"
+const (
+	sessionKey = "lchat-session-key"
+)
 
 func Run() error {
 
@@ -26,7 +29,7 @@ func Run() error {
 	setView(router)
 
 	// 允许跨域请求
-	// router.Use(middleware.Cors())
+	router.Use(middleware.Cors())
 
 	router.GET("/ping", ping)
 	router.GET("/", indexPage)
@@ -37,6 +40,8 @@ func Run() error {
 	router.GET("/registerCode", getRegisterCode)
 	router.POST("/register", register)
 	router.GET("/post", postPage)
+	router.GET("/oauth/:oauthType", oauth)
+	router.GET("/oauth/:oauthType/callback", oauthCallback)
 
 	authorized := router.Group("/")
 	authorized.Use(auth())
@@ -46,6 +51,7 @@ func Run() error {
 		authorized.POST("/post/addTag", postAddTag)
 		authorized.DELETE("/post/removeTag", postRemoveTag)
 		authorized.GET("/user/posts", userPostsPage)
+		authorized.POST("/upload", upload)
 	}
 
 	return router.Run(":" + conf.Get().Server.Port)
@@ -54,7 +60,7 @@ func Run() error {
 //设置 Gin 日志
 func setWebLog() {
 	gin.DisableConsoleColor()
-	f, _ := os.Create("data/web.log")
+	f, _ := os.Create("data/logs/web.log")
 	gin.DefaultWriter = io.MultiWriter(os.Stdout, f)
 }
 
@@ -71,7 +77,9 @@ func setSession(router *gin.Engine) {
 func setView(router *gin.Engine) {
 	router.Static("/css", "ui/static/css")
 	router.Static("/js", "ui/static/js")
-	router.Static("/images", "ui/static/img")
+	router.Static("/img", "ui/static/img")
+	router.Static("/fonts", "ui/static/fonts")
+	router.Static("/images", "data/images")
 	router.StaticFile("/favicon.ico", "ui/templates/favicon.ico")
 	//router.LoadHTMLGlob("ui/templates/**/*")
 	funcMap := template.FuncMap{

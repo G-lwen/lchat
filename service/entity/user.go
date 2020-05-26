@@ -9,12 +9,14 @@ import (
 type User struct {
 	Entity
 
-	Email string `gorm:"unique_index"`      //用户邮箱
-	Phone string                            // 用户手机号
-	Password string                         // 用户密码
-	NickName string                         // 用户昵称
-	Avatar string                           // 用户头像
-	IsAdmin bool                            // 判断是否超级管理员
+	Email string `gorm:"unique_index;default:null"`                          //用户邮箱
+	Phone string                                                             // 用户手机号
+	Password string                                                          // 用户密码
+	GithubOpenId uint64 `gorm:"unique_index;default:null"`                   // 用户 github OpenId
+	GithubUrl string                                                         // 用户 github url
+	NickName string                                                          // 用户昵称
+	AvatarUrl string                                                         // 用户头像
+	IsAdmin bool                                                             // 判断是否超级管理员
 }
 
 // 校验用户密码
@@ -40,13 +42,18 @@ func (user *User) Save() error {
 func (user *User) Update() error {
 	return store[UserStore].Model(user).Updates(map[string]interface{}{
 		"nick_name": user.NickName,
-		"avatar": user.Avatar,
+		"avatar": user.AvatarUrl,
 	}).Error
 }
 
 // 根据 ID 加载用户信息
 func (user *User) Load() error {
 	return store[UserStore].First(user).Error
+}
+
+// 根据用户 Github openid 加载用户信息
+func (user *User) LoadByGithubOpenId() error {
+	return store[UserStore].First(user, "github_open_id = ?", user.GithubOpenId).Error
 }
 
 // 根据用户邮箱号加载用户

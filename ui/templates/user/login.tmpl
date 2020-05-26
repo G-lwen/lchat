@@ -11,6 +11,7 @@
     <title>lchat</title>
     <link rel="icon" href="/favicon.ico">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.css">
     <style>
       body {
         height: 100%;
@@ -51,11 +52,12 @@
         <div class="form-group">
           <input type="password" class="form-control" name="password" id="inputPassword" placeholder="请输入密码" required>
         </div>
-        <div class="form-group form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1">
-          <label class="form-check-label" for="exampleCheck1">保存密码</label>
-        </div>
         <button type="submit" class="btn btn-primary btn-block">登录</button>
+        <div class="form-group mt-3">
+          <a href="/oauth/github" class="mr-1 border" data-toggle="tooltip" data-placement="right" title="Github 登录"><i class="fab fa-github"></i></a>
+          <a href="/oauth/github" class="mr-1 border" data-toggle="tooltip" data-placement="right" title="qq 登录"><i class="fab fa-qq"></i></a>
+          <a href="/register" class="float-right">注册</a>
+        </div>
       </form>
     </div>
 

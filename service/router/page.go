@@ -14,6 +14,7 @@ func indexPage(c *gin.Context) {
 		isAdmin bool
 		isLogin bool
 		nickName string
+		avatarUrl string
 		countTags int
 	)
 	pageIndex := c.DefaultQuery("pageIndex", "1")
@@ -23,6 +24,7 @@ func indexPage(c *gin.Context) {
 	if u, ok := user.(*entity.User); ok {
 		isLogin = true
 		nickName = u.NickName
+		avatarUrl = u.AvatarUrl
 		if u.IsAdmin {
 			isAdmin = true
 		}
@@ -46,6 +48,7 @@ func indexPage(c *gin.Context) {
 	c.HTML(http.StatusOK, "index.tmpl", gin.H{
 		"isLogin": isLogin,
 		"isAdmin": isAdmin,
+		"avatarUrl": avatarUrl,
 		"nickName": nickName,
 		"pageIndex": index,
 		"pageSize": size,
@@ -81,6 +84,7 @@ func postEditPage(c *gin.Context) {
 	var (
 		isAdmin bool
 		nickName string
+		avatarUrl string
 		hasPost bool
 		post = &entity.Post{}
 	)
@@ -88,6 +92,7 @@ func postEditPage(c *gin.Context) {
 	user := session.Get(sessionKey)
 	if u, ok := user.(*entity.User); ok {
 		nickName = u.NickName
+		avatarUrl = u.AvatarUrl
 		if u.IsAdmin {
 			isAdmin = true
 		}
@@ -106,6 +111,7 @@ func postEditPage(c *gin.Context) {
 	}
 	c.HTML(http.StatusOK, "post_edit.tmpl", gin.H{
 		"isAdmin": isAdmin,
+		"avatarUrl": avatarUrl,
 		"nickName": nickName,
 		"hasPost": hasPost,
 		"post": post,
@@ -124,6 +130,7 @@ func postPage(c *gin.Context) {
 	var (
 		isAdmin bool
 		isLogin bool
+		avatarUrl string
 		nickName string
 		countTags int
 		userId uint
@@ -134,6 +141,7 @@ func postPage(c *gin.Context) {
 	if u, ok := user.(*entity.User); ok {
 		isLogin = true
 		userId = u.ID
+		avatarUrl = u.AvatarUrl
 		nickName = u.NickName
 		if u.IsAdmin {
 			isAdmin = true
@@ -156,6 +164,7 @@ func postPage(c *gin.Context) {
 	c.HTML(http.StatusOK, "post.tmpl", gin.H{
 		"isLogin": isLogin,
 		"isAdmin": isAdmin,
+		"avatarUrl": avatarUrl,
 		"nickName": nickName,
 		"tags": tags,
 		"countTags": countTags,
@@ -167,6 +176,7 @@ func postPage(c *gin.Context) {
 func userPostsPage(c *gin.Context) {
 	var (
 		isAdmin bool
+		avatarUrl string
 		nickName string
 		userId uint
 	)
@@ -176,6 +186,7 @@ func userPostsPage(c *gin.Context) {
 	user := session.Get(sessionKey)
 	if u, ok := user.(*entity.User); ok {
 		userId = u.ID
+		avatarUrl = u.AvatarUrl
 		nickName = u.NickName
 		if u.IsAdmin {
 			isAdmin = true
@@ -201,6 +212,7 @@ func userPostsPage(c *gin.Context) {
 	}
 	c.HTML(http.StatusOK, "post_list.tmpl", gin.H{
 		"isAdmin": isAdmin,
+		"avatarUrl": avatarUrl,
 		"nickName": nickName,
 		"pageIndex": index,
 		"pageSize": size,

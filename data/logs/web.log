@@ -1,0 +1,44 @@
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /css/*filepath            --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] HEAD   /css/*filepath            --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] GET    /js/*filepath             --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] HEAD   /js/*filepath             --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] GET    /img/*filepath            --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] HEAD   /img/*filepath            --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] GET    /fonts/*filepath          --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] HEAD   /fonts/*filepath          --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] GET    /images/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] HEAD   /images/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] GET    /favicon.ico              --> github.com/gin-gonic/gin.(*RouterGroup).StaticFile.func1 (4 handlers)
+[GIN-debug] HEAD   /favicon.ico              --> github.com/gin-gonic/gin.(*RouterGroup).StaticFile.func1 (4 handlers)
+[GIN-debug] GET    /ping                     --> lchat/service/router.ping (5 handlers)
+[GIN-debug] GET    /                         --> lchat/service/router.indexPage (5 handlers)
+[GIN-debug] GET    /login                    --> lchat/service/router.loginPage (5 handlers)
+[GIN-debug] POST   /login                    --> lchat/service/router.login (5 handlers)
+[GIN-debug] GET    /logout                   --> lchat/service/router.logout (5 handlers)
+[GIN-debug] GET    /register                 --> lchat/service/router.registerPage (5 handlers)
+[GIN-debug] GET    /registerCode             --> lchat/service/router.getRegisterCode (5 handlers)
+[GIN-debug] POST   /register                 --> lchat/service/router.register (5 handlers)
+[GIN-debug] GET    /post                     --> lchat/service/router.postPage (5 handlers)
+[GIN-debug] GET    /oauth/:oauthType         --> lchat/service/router.oauth (5 handlers)
+[GIN-debug] GET    /oauth/:oauthType/callback --> lchat/service/router.oauthCallback (5 handlers)
+[GIN-debug] GET    /post/edit                --> lchat/service/router.postEditPage (6 handlers)
+[GIN-debug] POST   /post/publish             --> lchat/service/router.postPublish (6 handlers)
+[GIN-debug] POST   /post/addTag              --> lchat/service/router.postAddTag (6 handlers)
+[GIN-debug] DELETE /post/removeTag           --> lchat/service/router.postRemoveTag (6 handlers)
+[GIN-debug] GET    /user/posts               --> lchat/service/router.userPostsPage (6 handlers)
+[GIN-debug] POST   /upload                   --> lchat/service/router.upload (6 handlers)
+[GIN-debug] Listening and serving HTTP on :8088
+[GIN] 2020/05/26 - 19:06:39 | 200 |   15.571633ms |  116.28.142.202 | GET      "/post/edit"
+[GIN] 2020/05/26 - 19:06:39 | 304 |     135.308µs |  116.28.142.202 | GET      "/css/font-awesome.css"
+[GIN] 2020/05/26 - 19:06:39 | 304 |     416.529µs |  116.28.142.202 | GET      "/css/atelier-forest-dark.min.css"
+[GIN] 2020/05/26 - 19:06:39 | 304 |     238.847µs |  116.28.142.202 | GET      "/js/highlight.min.js"
+[GIN] 2020/05/26 - 19:06:39 | 304 |     162.187µs |  116.28.142.202 | GET      "/fonts/fa-solid-900.woff2"
+[GIN] 2020/05/26 - 19:07:45 | 200 |    2.133614ms |  116.28.142.202 | GET      "/post/edit"
+[GIN] 2020/05/26 - 19:08:50 | 200 |    4.711622ms |  116.28.142.202 | GET      "/post/edit"
+[GIN] 2020/05/26 - 19:08:52 | 200 |    7.339115ms |  116.28.142.202 | GET      "/"

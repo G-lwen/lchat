@@ -53,7 +53,7 @@ func New() {
 func writeSyncer(level string) zapcore.WriteSyncer {
 	now := time.Now()
 	return zapcore.AddSync(&lumberjack.Logger{
-		Filename:   fmt.Sprintf("data/lchat-%s-%04d%02d%02d.log", level, now.Year(), now.Month(), now.Day()),
+		Filename:   fmt.Sprintf("data/logs/lchat-%s-%04d%02d%02d.log", level, now.Year(), now.Month(), now.Day()),
 		MaxSize:    500, // megabytes
 		MaxBackups: 3,
 		MaxAge:     28, // days

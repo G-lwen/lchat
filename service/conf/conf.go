@@ -11,6 +11,7 @@ type Configurations struct {
 	DB []*DBConfig
 	Mail *MailConfig
 	Admin *AdminConfig
+	Oauth *OauthConfig
 }
 
 // 服务器配置
@@ -30,6 +31,13 @@ type MailConfig struct {
 	Addr string
 	User string
 	Password string
+}
+
+// 第三方授权
+type OauthConfig struct {
+	GithubClientId string `yaml:"github_client_id"`
+	GithubClientSecret string `yaml:"github_client_secret"`
+	GithubRedirectUrl string `yaml:"github_redirect_url"`
 }
 
 // 管理员初始信息

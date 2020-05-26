@@ -2,13 +2,18 @@ server:
   port: 8088
 
 db:
-  - { name: "user", dialect: "sqlite3", dsn: "./data/user.db?cache=shared" }
-  - { name: "post", dialect: "sqlite3", dsn: "./data/post.db?cache=shared" }
+  - { name: "user", dialect: "sqlite3", dsn: "./data/db/user.db?cache=shared" }
+  - { name: "post", dialect: "sqlite3", dsn: "./data/db/post.db?cache=shared" }
 
 mail:
   addr: smtp.163.com:25
   user: lweny_c@163.com
   password: lw666666
+
+oauth:
+  github_client_id: 1a6f7629349cbca9978e
+  github_client_secret: 43824abb60ca2c4b368282a0232992be95395b5b
+  github_redirect_url: https://c37b7d3.cpolar.io/oauth/github/callback
 
 admin:
   email: admin@163.com
