@@ -52,6 +52,7 @@ func Run() error {
 		authorized.DELETE("/post/removeTag", postRemoveTag)
 		authorized.GET("/user/posts", userPostsPage)
 		authorized.POST("/upload", upload)
+		authorized.GET("/download/post/:postId", downloadPost)
 	}
 
 	return router.Run(":" + conf.Get().Server.Port)

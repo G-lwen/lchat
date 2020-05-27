@@ -79,6 +79,7 @@
                       <td>
                         <a class="btn btn-link" href="/post?postId={{ .ID }}" target="_Blank">预览</a>
                         <a class="btn btn-link" href="/post/edit?postId={{ .ID }}" target="_Blank">编辑</a>
+                        <a class="btn btn-link" href="/download/post/{{ .ID }}" target="_Blank">下载</a>
                       </td>
                       <td>{{ timeFormat .CreatedAt "2006/01/02 15:04" }}</td>
                       <td>{{ timeFormat .UpdatedAt "2006/01/02 15:04" }}</td>
