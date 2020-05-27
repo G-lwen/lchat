@@ -7,7 +7,7 @@
 - gin (go web 框架)
 - gorm (orm 框架)
 - go-yarm (配置文件)
-- go-uuid (唯一键)
+- go-uuid (唯一键)  
 **前端**
 - bootstrap (ui)
 - jquery (js)
