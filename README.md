@@ -33,25 +33,25 @@ $ cat conf/lchat.yaml
 
 **首页**
 
-![](./data/images/index.png)
+![index](./data/images/index.png)
 
 **注册**
 
-![](./data/images/register.png)
+![register](./data/images/register.png)
 
 **登录**
 
-![](./data/images/login.png)
+![login](./data/images/login.png)
 
 **文章编辑**
 
-![](./data/images/post_edit.png)
+![post_edit](./data/images/post_edit.png)
 
 **用户文库**
 
-![](./data/images/user_posts.png)
+![user_posts](./data/images/user_posts.png)
 
 **浏览文章**
 
-![](./data/images/post.png)
+![post](./data/images/post.png)
 
